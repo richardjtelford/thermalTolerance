@@ -4,7 +4,7 @@
 \alias{psiiht}
 \title{Heat tolerances}
 \usage{
-psiiht(temperature, fvfm, control_temp, id, plot.est, boots)
+psiiht(temperature, fvfm, control_temp, id, boots)
 }
 \arguments{
 \item{temperature}{Temperature}
@@ -15,14 +15,14 @@ psiiht(temperature, fvfm, control_temp, id, plot.est, boots)
 
 \item{id}{leaf ID}
 
-\item{plot.est}{Should estimates be plotted}
-
 \item{boots}{Number of bootstrap iterations}
 }
 \description{
 Code for estimating heat tolerances using variable fluorescence!
 }
 \examples{
-psiiht(temperature = htdata$temperature, fvfm = htdata$fvfm, 
-  control_temp = 23, id = htdata$id, plot.est = TRUE, boots = 5)
+psiiht(
+  temperature = htdata$temperature, fvfm = htdata$fvfm,
+  control_temp = 23, id = htdata$id, boots = 5
+)
 }

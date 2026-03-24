@@ -13,4 +13,7 @@ Depends:
     R (>= 3.5)
 LazyData: true
 Imports: 
-    car
+    car,
+    dplyr,
+    ggplot2,
+    purrr
