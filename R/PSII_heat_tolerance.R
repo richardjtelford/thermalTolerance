@@ -6,6 +6,9 @@
 #' @param id leaf ID
 #' @param control_temp Control temperature
 #' @param boots Number of bootstrap iterations
+#' @param warming Is the experiment analysing heat tolerance (TRUE)
+#'  (fvfm declines with high values) or cold tolerance (FALSE)
+#'  (fmfv declines with low values)? Important for calculating Tcrit.
 #' @examples
 #' htol <- psiiht(
 #'   temperature = htdata$temperature, fvfm = htdata$fvfm,
@@ -17,11 +20,11 @@
 #' @importFrom stats nls coef lm na.omit quantile
 #' @importFrom purrr list_rbind
 #' @importFrom rlang set_names
-#' @importFrom dplyr bind_cols
+#' @importFrom dplyr bind_cols filter slice_min pull
 #' @export
 
 
-psiiht <- function(temperature, fvfm, id, control_temp, boots) {
+psiiht <- function(temperature, fvfm, id, control_temp, warming = TRUE, boots) {
   HTdf <- data.frame(temperature = temperature, fvfm = fvfm, id = id) |>
     na.omit()
 
@@ -75,6 +78,7 @@ psiiht <- function(temperature, fvfm, id, control_temp, boots) {
 
           # Use model to predict changes in fvfm & make new dataframe
           # create a dataframe of predictions
+
           predict <- data.frame(
             x = t_vals,
             y = coef(HT_model2)[1] /
@@ -86,12 +90,21 @@ psiiht <- function(temperature, fvfm, id, control_temp, boots) {
             coef(lm((x[3:4]) ~ x[1:2]))[2]
           }))
           # Determine where slope is 15% of max slope & round
-          slp.at.tcrit <- round(min(df1$slp), 3) * .15
-          # Estimate the fvfm at which the slope is 15% of max slope & less than T50
-          fvfv.at.tcrit <- df1[which(abs(df1[which(df1[, 1] < T50[k]), ]$slp - slp.at.tcrit) == min(abs(df1[which(df1[, 1] < T50[k]), ]$slp - slp.at.tcrit))), ][1, 3]
-          # Estimate the temperature at which the slope is 15% of max slope
-          Tcrit[k] <- (-log((coef(HT_model2)[[1]] / fvfv.at.tcrit) - 1) -
-            coef(HT_model2)[[2]]) / coef(HT_model2)[[3]]
+          if(warming) {
+            slp.at.tcrit <- min(df1$slp) * .15
+            # Find the temperature at which the slope is 15% of max slope and < T50
+            Tcrit[k] <- df1 |> filter(x < T50[k]) |> 
+              slice_min(abs(slp - slp.at.tcrit)) |> 
+              pull(x)
+          } else { # cooling
+            slp.at.tcrit <- max(df1$slp) * .15
+            # Find the temperature at which the slope is 15% of max slope and > T50
+            
+            Tcrit[k] <- df1 |> filter(x > T50[k]) |> 
+              slice_min(abs(slp - slp.at.tcrit)) |> 
+              pull(x)
+            
+          }
         } else {
           predict_boot[, k] <- NA
           T95[k] <- NA

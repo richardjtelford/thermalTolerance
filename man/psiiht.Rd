@@ -4,7 +4,7 @@
 \alias{psiiht}
 \title{Heat tolerances}
 \usage{
-psiiht(temperature, fvfm, id, control_temp, boots)
+psiiht(temperature, fvfm, id, control_temp, warming = TRUE, boots)
 }
 \arguments{
 \item{temperature}{Temperature}
@@ -14,6 +14,10 @@ psiiht(temperature, fvfm, id, control_temp, boots)
 \item{id}{leaf ID}
 
 \item{control_temp}{Control temperature}
+
+\item{warming}{Is the experiment analysing heat tolerance (TRUE)
+(fvfm declines with high values) or cold tolerance (FALSE)
+(fmfv declines with low values)? Important for calculating Tcrit.}
 
 \item{boots}{Number of bootstrap iterations}
 }
