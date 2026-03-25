@@ -15,7 +15,7 @@
 #' autoplot(htol)
 #' @importFrom car logit
 #' @importFrom stats nls coef lm na.omit quantile
-#' @importFrom purrr list_rbind 
+#' @importFrom purrr list_rbind
 #' @importFrom rlang set_names
 #' @importFrom dplyr bind_cols
 #' @export
@@ -67,11 +67,11 @@ psiiht <- function(temperature, fvfm, id, control_temp, boots) {
             (1 + exp(-(coef(HT_model2)[2] + coef(HT_model2)[3] * t_vals)))
           # Estimate T95
           T95[k] <- (-log((coef(HT_model2)[1] / nine5) - 1) -
-                       coef(HT_model2)[2]) / coef(HT_model2)[3]
+            coef(HT_model2)[2]) / coef(HT_model2)[3]
 
           # Estimate T50
           T50[k] <- (-log((coef(HT_model2)[[1]] / half) - 1) -
-                       coef(HT_model2)[[2]]) / coef(HT_model2)[[3]]
+            coef(HT_model2)[[2]]) / coef(HT_model2)[[3]]
 
           # Use model to predict changes in fvfm & make new dataframe
           # create a dataframe of predictions
@@ -91,7 +91,7 @@ psiiht <- function(temperature, fvfm, id, control_temp, boots) {
           fvfv.at.tcrit <- df1[which(abs(df1[which(df1[, 1] < T50[k]), ]$slp - slp.at.tcrit) == min(abs(df1[which(df1[, 1] < T50[k]), ]$slp - slp.at.tcrit))), ][1, 3]
           # Estimate the temperature at which the slope is 15% of max slope
           Tcrit[k] <- (-log((coef(HT_model2)[[1]] / fvfv.at.tcrit) - 1) -
-                         coef(HT_model2)[[2]]) / coef(HT_model2)[[3]]
+            coef(HT_model2)[[2]]) / coef(HT_model2)[[3]]
         } else {
           predict_boot[, k] <- NA
           T95[k] <- NA

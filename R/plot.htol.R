@@ -12,8 +12,6 @@
 #' @importFrom rlang .data
 #' @export
 fortify.htol <- function(model, data = model$data, ...) {
-
-
   preds <- map(model$results, "preds") |>
     list_rbind(names_to = "id")
 
@@ -37,10 +35,11 @@ fortify.htol <- function(model, data = model$data, ...) {
 #' Autoplot htol objects
 #' @description
 #' Default plots for htol objects made by `psiiht`
-#' 
+#'
 #' @param object Result from `psiiht`
-#' @param \dots Extra arguments, currently unused 
-#' @importFrom ggplot2 ggplot geom_point geom_ribbon aes facet_wrap vars geom_line geom_vline autoplot
+#' @param \dots Extra arguments, currently unused
+#' @importFrom ggplot2 ggplot geom_point geom_ribbon aes facet_wrap vars
+#' geom_line geom_vline autoplot
 #' @export
 autoplot.htol <- function(object, ...) {
   object <- fortify.htol(object)
