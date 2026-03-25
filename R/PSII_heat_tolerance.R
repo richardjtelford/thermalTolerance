@@ -7,13 +7,16 @@
 #' @param control_temp Control temperature
 #' @param boots Number of bootstrap iterations
 #' @examples
-#' psiiht(
+#' htol <- psiiht(
 #'   temperature = htdata$temperature, fvfm = htdata$fvfm,
 #'   control_temp = 23, id = htdata$id, boots = 5
 #' )
+#' summary(htol)
+#' autoplot(htol)
 #' @importFrom car logit
 #' @importFrom stats nls coef lm na.omit quantile
-#' @importFrom purrr list_rbind
+#' @importFrom purrr list_rbind 
+#' @importFrom rlang set_names
 #' @importFrom dplyr bind_cols
 #' @export
 
@@ -105,14 +108,13 @@ psiiht <- function(temperature, fvfm, control_temp, id, boots) {
         bind_cols(temperature = t_vals, preds = preds)
 
       list(
-        data = df,
         preds = preds,
         T95 = T95,
         T50 = T50,
         Tcrit = Tcrit
       )
     })
-
+  results <- list(data = HTdf, results = results)
   class(results) <- c("htol", class(results))
   results
 }

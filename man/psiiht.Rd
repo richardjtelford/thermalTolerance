@@ -21,8 +21,10 @@ psiiht(temperature, fvfm, control_temp, id, boots)
 Code for estimating heat tolerances using variable fluorescence!
 }
 \examples{
-psiiht(
+htol <- psiiht(
   temperature = htdata$temperature, fvfm = htdata$fvfm,
   control_temp = 23, id = htdata$id, boots = 5
 )
+summary(htol)
+autoplot(htol)
 }
