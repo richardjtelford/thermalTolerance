@@ -17,7 +17,7 @@ remotes::install_github("richardjtelford/thermalTolerance")
 Open the package with 
 
 ``` r
-library(HeatTolerance)
+library(thermalTolerance)
 
 # htdata is demo data
 htol <- psiiht(temperature = htdata$temperature, fvfm = htdata$fvfm, id = htdata$id, 
