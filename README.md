@@ -20,8 +20,8 @@ Open the package with
 library(HeatTolerance)
 
 # htdata is demo data
-htol <- psiiht(temperature = htdata$temperature, fvfm = htdata$fvfm, control_temp = 23, 
-       id = htdata$id, boots = 5)
+htol <- psiiht(temperature = htdata$temperature, fvfm = htdata$fvfm, id = htdata$id, 
+          control_temp = 23, boots = 5)
 summary(htol)
 autoplot(htol)
 ```
