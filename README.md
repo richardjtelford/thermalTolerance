@@ -1,4 +1,31 @@
- Thanks for visiting. This file contains from sample data from a paper (that can be found here: https://onlinelibrary.wiley.com/doi/10.1111/pce.13990), and a small piece of R code that can used to estimate the PSII heat tolerance of PSII measured with maximum quantum yield of PSII (i.e. Fv/Fm). The function is pretty straightforward - it will provide estimates of 3 different PSII heat tolerances; Tcrit, T50 & T95. For more information on these heat tolerances, you can read this paper: https://onlinelibrary.wiley.com/doi/abs/10.1111/pce.13990. The user defines the temperature treatments used, the response variable (Fv/Fm), if they want to plot their results, the number of bootstrap iteration they would like, and a unique identifier (like a species) that indicate how the data should be spilt before curves are estimated. 
+ 
+
+This repo is a fork of the code for Perez et al 2020, with code encapsulated into a package.
+
+The package can be installed with
+
+``` r
+# install pak if necessary
+install.packages("pak")
+pak::pak("richardjtelford/Heat_tolerance_function") # name will change
+
+```
+
+Open the package with 
+
+``` r
+library(HeatTolerance)
+
+# htdata is demo data
+htol <- psiiht(temperature = htdata$temperature, fvfm = htdata$fvfm, control_temp = 23, 
+       id = htdata$id, boots = 5)
+summary(htol)
+autoplot(htol)
+```
+
+The original readme follows:
+
+This file contains from sample data from a paper (that can be found here: https://onlinelibrary.wiley.com/doi/10.1111/pce.13990), and a small piece of R code that can used to estimate the PSII heat tolerance of PSII measured with maximum quantum yield of PSII (i.e. Fv/Fm). The function is pretty straightforward - it will provide estimates of 3 different PSII heat tolerances; Tcrit, T50 & T95. For more information on these heat tolerances, you can read this paper: https://onlinelibrary.wiley.com/doi/abs/10.1111/pce.13990. The user defines the temperature treatments used, the response variable (Fv/Fm), if they want to plot their results, the number of bootstrap iteration they would like, and a unique identifier (like a species) that indicate how the data should be spilt before curves are estimated. 
  
 Right now, Fv/Fm is the response variable, but other response variable like membrane leakage or cell death could be used. However,  the parameters in the nls function would have to be changed (e.g. the 0.8 value indicating the y-intercept would change).\
 \
@@ -8,4 +35,4 @@ The only required package for this function is the 'car' package, which is used 
 
 If you use this code or this data, please consider citing the papers above. Thanks.
 
-https://onlinelibrary.wiley.com/doi/10.1111/pce.13990}
+https://onlinelibrary.wiley.com/doi/10.1111/pce.13990
