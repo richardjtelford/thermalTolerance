@@ -16,4 +16,6 @@ Imports:
     car,
     dplyr,
     ggplot2,
-    purrr
+    purrr,
+    tibble,
+    tidyr
