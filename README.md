@@ -7,8 +7,11 @@ The package can be installed with
 ``` r
 # install pak if necessary
 install.packages("pak")
-pak::pak("richardjtelford/HeatTolerance") # name will change
+pak::pak("richardjtelford/thermalTolerance") 
 
+## OR if this fails, try
+install.packages("remotes")
+remotes::install_github("richardjtelford/thermalTolerance") 
 ```
 
 Open the package with 
