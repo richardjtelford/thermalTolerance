@@ -12,9 +12,9 @@ summary.htol <- function(object, ...) {
 
 
       data.frame(
-        Tcrit.mn = round(mean(na.omit(x$Tcrit)), 1),
-        T50.mn = round(mean(na.omit(x$T50)), 1),
-        T95.mn = round(mean(na.omit(x$T95)), 1)
+        Tcrit.mn = mean(na.omit(x$Tcrit)),
+        T50.mn = mean(na.omit(x$T50)),
+        T95.mn = mean(na.omit(x$T95))
       )
     }) |>
     list_rbind(names_to = "id")
