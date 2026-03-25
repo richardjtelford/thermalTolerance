@@ -4,16 +4,16 @@
 \alias{psiiht}
 \title{Heat tolerances}
 \usage{
-psiiht(temperature, fvfm, control_temp, id, boots)
+psiiht(temperature, fvfm, id, control_temp, boots)
 }
 \arguments{
 \item{temperature}{Temperature}
 
 \item{fvfm}{fvfm data}
 
-\item{control_temp}{Control temperature}
-
 \item{id}{leaf ID}
+
+\item{control_temp}{Control temperature}
 
 \item{boots}{Number of bootstrap iterations}
 }

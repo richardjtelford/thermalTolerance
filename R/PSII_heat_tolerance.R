@@ -21,7 +21,7 @@
 #' @export
 
 
-psiiht <- function(temperature, fvfm, control_temp, id, boots) {
+psiiht <- function(temperature, fvfm, id, control_temp, boots) {
   HTdf <- data.frame(temperature = temperature, fvfm = fvfm, id = id) |>
     na.omit()
 
