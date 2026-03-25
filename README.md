@@ -1,13 +1,13 @@
  
 
-This repo is a fork of the code for Perez et al 2020, with code encapsulated into a package.
+This repo is a fork of Perez et al 2020, with the code encapsulated into a package.
 
 The package can be installed with
 
 ``` r
 # install pak if necessary
 install.packages("pak")
-pak::pak("richardjtelford/Heat_tolerance_function") # name will change
+pak::pak("richardjtelford/HeatTolerance") # name will change
 
 ```
 
