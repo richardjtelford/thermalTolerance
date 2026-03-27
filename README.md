@@ -18,10 +18,13 @@ Open the package with
 
 ``` r
 library(thermalTolerance)
+```
 
+And run it with (but with many more bootstrap samples.)
+``` r
 # htdata is demo data
 htol <- psiiht(temperature = htdata$temperature, fvfm = htdata$fvfm, id = htdata$id, 
-          control_temp = 23, boots = 5)
+          control_temp = 23, warming = TRUE, boots = 5)
 summary(htol)
 autoplot(htol)
 ```
