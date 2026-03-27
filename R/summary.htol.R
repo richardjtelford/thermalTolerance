@@ -12,6 +12,7 @@ summary.htol <- function(object, ...) {
 
 
       data.frame(
+        prop_success = mean(!is.na(x$T50)),
         Tcrit.mn = mean(na.omit(x$Tcrit)),
         T50.mn = mean(na.omit(x$T50)),
         T95.mn = mean(na.omit(x$T95))
