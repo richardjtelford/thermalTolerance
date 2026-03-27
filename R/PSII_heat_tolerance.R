@@ -97,16 +97,17 @@ psiiht <- function(temperature, fvfm, id, control_temp, warming = TRUE, boots) {
           if(warming) {
             slp.at.tcrit <- min(df1$slp) * .15
             # Find the temperature at which the slope is 15% of max slope and < T50
-            Tcrit[k] <- df1 |> filter(x < T50[k]) |> 
-              slice_min(abs(slp - slp.at.tcrit)) |> 
-              pull(x)
+            Tcrit[k] <- df1 |> 
+              filter(.data$x < T50[k]) |> 
+              slice_min(abs(.data$slp - slp.at.tcrit)) |> 
+              pull(.data$x)
           } else { # cooling
             slp.at.tcrit <- max(df1$slp) * .15
             # Find the temperature at which the slope is 15% of max slope and > T50
             
-            Tcrit[k] <- df1 |> filter(x > T50[k]) |> 
-              slice_min(abs(slp - slp.at.tcrit)) |> 
-              pull(x)
+            Tcrit[k] <- df1 |> filter(.data$x > T50[k]) |> 
+              slice_min(abs(.data$slp - slp.at.tcrit)) |> 
+              pull(.data$x)
             
           }
         } else {
