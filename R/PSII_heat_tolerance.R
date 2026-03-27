@@ -36,11 +36,15 @@ psiiht <- function(temperature, fvfm, id, control_temp, warming = TRUE, boots) {
       # get parameter estimates for logistic decay model
       cof <- coef(lm(logit(fvfm) ~ temperature, data = df))
       # Fit a non linear least squares model to the fvfm and Temperature data
-      HT_model <- nls(fvfm ~ theta1 / (1 + exp(-(theta2 + theta3 * temperature))),
+      HT_model <- try(nls(fvfm ~ theta1 / (1 + exp(-(theta2 + theta3 * temperature))),
         start = list(theta1 = .8, theta2 = cof[1], theta3 = cof[2]),
         trace = FALSE, control = list(maxiter = 1000, tol = 1e-3),
         data = df
-      )
+      ))
+      # return NULL if model does not fit
+      if(inherits(HT_model, "try-error")) {
+       return(NULL) 
+      }
 
       # Use the parameter estimates (coef(HT_model)[#]) from the HT_model to
       # predict a new fit based on a heat treatments
