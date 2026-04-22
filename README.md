@@ -22,6 +22,7 @@ library(thermalTolerance)
 
 And run it with (but with many more bootstrap samples.)
 ``` r
+library(future)
 plan(multisession) # activate parallel processing
 # htdata is demo data
 htol <- psiiht(temperature = htdata$temperature, fvfm = htdata$fvfm, id = htdata$id, 
