@@ -10,6 +10,8 @@
 #'  (fvfm declines with high values) or cold tolerance (FALSE)
 #'  (fmfv declines with low values)? Important for calculating Tcrit.
 #' @examples
+#' library(future)
+#' plan(multisession) # enable parallel processing
 #' htol <- psiiht(
 #'   temperature = htdata$temperature, fvfm = htdata$fvfm,
 #'   control_temp = 23, id = htdata$id, boots = 5
@@ -21,6 +23,7 @@
 #' @importFrom purrr list_rbind
 #' @importFrom rlang set_names
 #' @importFrom dplyr bind_cols filter slice_min pull
+#' @importFrom futurize futurize
 #' @export
 
 
@@ -131,7 +134,7 @@ psiiht <- function(temperature, fvfm, id, control_temp, warming = TRUE, boots) {
         T50 = T50,
         Tcrit = Tcrit
       )
-    })
+    }) |> futurize(seed = TRUE)
   results <- list(data = HTdf, results = results)
   class(results) <- c("htol", class(results))
   results
