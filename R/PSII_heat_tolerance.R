@@ -11,7 +11,9 @@
 #'  (fmfv declines with low values)? Important for calculating Tcrit.
 #' @examples
 #' library(future)
-#' plan(multisession) # enable parallel processing
+#' plan(sequential)
+#' # plan(multisession) # uncomment to enable parallel processing
+#' 
 #' htol <- psiiht(
 #'   temperature = htdata$temperature, fvfm = htdata$fvfm,
 #'   control_temp = 23, id = htdata$id, boots = 5
@@ -23,7 +25,7 @@
 #' @importFrom purrr list_rbind
 #' @importFrom rlang set_names
 #' @importFrom dplyr bind_cols filter slice_min pull
-#' @importFrom futurize futurize
+#' @importFrom future.apply future_lapply
 #' @export
 
 
@@ -35,7 +37,7 @@ psiiht <- function(temperature, fvfm, id, control_temp, warming = TRUE, boots) {
   t_vals <- seq(min(HTdf$temperature), max(HTdf$temperature), length = 100)
 
   results <- split(HTdf, ~id) |>
-    lapply(function(df) {
+    future_lapply(function(df) {
       # get parameter estimates for logistic decay model
       cof <- coef(lm(logit(fvfm) ~ temperature, data = df))
       # Fit a non linear least squares model to the fvfm and Temperature data
@@ -134,7 +136,7 @@ psiiht <- function(temperature, fvfm, id, control_temp, warming = TRUE, boots) {
         T50 = T50,
         Tcrit = Tcrit
       )
-    }) |> futurize(seed = TRUE)
+    }, future.seed = TRUE)
   results <- list(data = HTdf, results = results)
   class(results) <- c("htol", class(results))
   results

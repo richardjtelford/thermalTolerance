@@ -26,7 +26,9 @@ Code for estimating heat tolerances using variable fluorescence!
 }
 \examples{
 library(future)
-plan(multisession) # enable parallel processing
+plan(sequential)
+# plan(multisession) # uncomment to enable parallel processing
+
 htol <- psiiht(
   temperature = htdata$temperature, fvfm = htdata$fvfm,
   control_temp = 23, id = htdata$id, boots = 5

@@ -15,7 +15,7 @@ LazyData: true
 Imports: 
     car,
     dplyr,
-    futurize,
+    future.apply,
     ggplot2,
     purrr,
     rlang,
