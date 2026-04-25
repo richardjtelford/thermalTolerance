@@ -13,7 +13,7 @@
 #' library(future)
 #' plan(sequential)
 #' # plan(multisession) # uncomment to enable parallel processing
-#' 
+#'
 #' htol <- psiiht(
 #'   temperature = htdata$temperature, fvfm = htdata$fvfm,
 #'   control_temp = 23, id = htdata$id, boots = 5
@@ -47,8 +47,8 @@ psiiht <- function(temperature, fvfm, id, control_temp, warming = TRUE, boots) {
         data = df
       ))
       # return NULL if model does not fit
-      if(inherits(HT_model, "try-error")) {
-       return(NULL) 
+      if (inherits(HT_model, "try-error")) {
+        return(NULL)
       }
 
       # Use the parameter estimates (coef(HT_model)[#]) from the HT_model to
@@ -99,21 +99,21 @@ psiiht <- function(temperature, fvfm, id, control_temp, warming = TRUE, boots) {
             coef(lm((x[3:4]) ~ x[1:2]))[2]
           }))
           # Determine where slope is 15% of max slope & round
-          if(warming) {
+          if (warming) {
             slp.at.tcrit <- min(df1$slp) * .15
             # Find the temperature at which the slope is 15% of max slope and < T50
-            Tcrit[k] <- df1 |> 
-              filter(.data$x < T50[k]) |> 
-              slice_min(abs(.data$slp - slp.at.tcrit)) |> 
+            Tcrit[k] <- df1 |>
+              filter(.data$x < T50[k]) |>
+              slice_min(abs(.data$slp - slp.at.tcrit)) |>
               pull(.data$x)
           } else { # cooling
             slp.at.tcrit <- max(df1$slp) * .15
             # Find the temperature at which the slope is 15% of max slope and > T50
-            
-            Tcrit[k] <- df1 |> filter(.data$x > T50[k]) |> 
-              slice_min(abs(.data$slp - slp.at.tcrit)) |> 
+
+            Tcrit[k] <- df1 |>
+              filter(.data$x > T50[k]) |>
+              slice_min(abs(.data$slp - slp.at.tcrit)) |>
               pull(.data$x)
-            
           }
         } else {
           predict_boot[, k] <- NA
